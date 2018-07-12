@@ -3,12 +3,12 @@ version: 1
 id: {BA42F1E6-C523-4C9D-AF65-5D8B0D1E9696}
 database: master
 path: /sitecore/media library/EzImporter/Data
-parent: {324D89AB-7EE6-4CBF-8079-D72C3ACDB5BF}
+parent: {E7EDC167-A1EF-4400-822A-BB521B8D2DF1}
 name: Data
 master: {00000000-0000-0000-0000-000000000000}
 template: {FE5DD826-48C6-436D-B87A-7C4210C7413B}
 templatekey: Media folder
-created: 20161105T221000:636139806006500000
+created: 20180710T114330:636668198105970000
 
 ----version----
 language: en

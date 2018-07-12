@@ -16,7 +16,7 @@ namespace EzImporter.Map
 
             var mapInfo = new ItemImportMap
             {
-                InputFields = inputColumnsItem.Children.Select(c => new InputField {Name = c.Name}).ToList(),
+                InputFields = inputColumnsItem.Children.Select(c => new InputField {Name = c.Name, XsltSelector = c["xsltselector"]}).ToList(),
                 OutputMaps = mapItem.Children
                     .Where(c => c.InheritsFrom(OutputMapTemplateItem.TemplateId))
                     .Select(om => CreateOutputMap(om, null))

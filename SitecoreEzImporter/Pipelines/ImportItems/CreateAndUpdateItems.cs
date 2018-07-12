@@ -50,70 +50,78 @@ namespace EzImporter.Pipelines.ImportItems
 
         private Item CreateItem(ImportItemsArgs args, ItemDto importItem, Item parentItem)
         {
-            //CustomItemBase nItemTemplate = GetNewItemTemplate(dataRow);
-            var templateItem = args.Database.GetTemplate(importItem.TemplateId);
+      try
+      {
+        //CustomItemBase nItemTemplate = GetNewItemTemplate(dataRow);
+        var templateItem = args.Database.GetTemplate(importItem.TemplateId);
 
-            //get the parent in the specific language
-            Item parent = args.Database.GetItem(parentItem.ID);
+        //get the parent in the specific language
+        Item parent = args.Database.GetItem(parentItem.ID);
 
-            Item item;
-            //search for the child by name
-            item = parent.GetChildren()[importItem.Name];
-            if (item != null)
+        Item item;
+        //search for the child by name
+        item = parent.GetChildren()[importItem.Name];
+        if (item != null)
+        {
+          if (args.ImportOptions.ExistingItemHandling == ExistingItemHandling.AddVersion)
+          {
+            args.Statistics.UpdatedItems++;
+            item = item.Versions.AddVersion();
+            Log.Info(string.Format("EzImporter:Creating new version of item {0}", item.Paths.ContentPath),
+                this);
+          }
+          else if (args.ImportOptions.ExistingItemHandling == ExistingItemHandling.Skip)
+          {
+            Log.Info(string.Format("EzImporter:Skipping update of item {0}", item.Paths.ContentPath), this);
+            return item;
+          }
+          else if (args.ImportOptions.ExistingItemHandling == ExistingItemHandling.Update)
+          {
+            //continue to update current item/version
+            args.Statistics.UpdatedItems++;
+          }
+        }
+        else
+        {
+          //if not found then create one
+          args.Statistics.CreatedItems++;
+          item = parent.Add(importItem.Name, templateItem);
+          Log.Info(string.Format("EzImporter:Creating item {0}", item.Paths.ContentPath), this);
+        }
+
+        if (item == null)
+        {
+          throw new NullReferenceException("the new item created was null");
+        }
+
+        using (new EditContext(item, true, false))
+        {
+          //add in the field mappings
+          foreach (var key in importItem.Fields.Keys)
+          {
+            var fieldValue = importItem.Fields[key];
+            var field = item.Fields[key];
+            if (field != null)
             {
-                if (args.ImportOptions.ExistingItemHandling == ExistingItemHandling.AddVersion)
-                {
-                    args.Statistics.UpdatedItems++;
-                    item = item.Versions.AddVersion();
-                    Log.Info(string.Format("EzImporter:Creating new version of item {0}", item.Paths.ContentPath),
-                        this);
-                }
-                else if (args.ImportOptions.ExistingItemHandling == ExistingItemHandling.Skip)
-                {
-                    Log.Info(string.Format("EzImporter:Skipping update of item {0}", item.Paths.ContentPath), this);
-                    return item;
-                }
-                else if (args.ImportOptions.ExistingItemHandling == ExistingItemHandling.Update)
-                {
-                    //continue to update current item/version
-                    args.Statistics.UpdatedItems++;
-                }
+              FieldUpdateManager.UpdateField(field, fieldValue, args.ImportOptions);
+              Log.Info(string.Format("'{0}' field set to '{1}'", key, fieldValue), this);
             }
             else
             {
-                //if not found then create one
-                args.Statistics.CreatedItems++;
-                item = parent.Add(importItem.Name, templateItem);
-                Log.Info(string.Format("EzImporter:Creating item {0}", item.Paths.ContentPath), this);
+              Log.Info(
+                  string.Format(
+                      "EzImporter:Field '{0}' not found on item, skipping update for this field",
+                      key), this);
             }
-
-            if (item == null)
-            {
-                throw new NullReferenceException("the new item created was null");
-            }
-
-            using (new EditContext(item, true, false))
-            {
-                //add in the field mappings
-                foreach (var key in importItem.Fields.Keys)
-                {
-                    var fieldValue = importItem.Fields[key];
-                    var field = item.Fields[key];
-                    if (field != null)
-                    {
-                        FieldUpdateManager.UpdateField(field, fieldValue, args.ImportOptions);
-                        Log.Info(string.Format("'{0}' field set to '{1}'", key, fieldValue), this);
-                    }
-                    else
-                    {
-                        Log.Info(
-                            string.Format(
-                                "EzImporter:Field '{0}' not found on item, skipping update for this field",
-                                key), this);
-                    }
-                }
-                return item;
-            }
+          }
+          return item;
+        }
+      }
+      catch(Exception ex)
+      {
+        Log.Error(string.Format("unable to create/update the item {0} from {1}: Error {2}", importItem.Name, importItem.Parent.Name, ex.ToString()),this);
+        return null;
+      }
         }
     }
 }

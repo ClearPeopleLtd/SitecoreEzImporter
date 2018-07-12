@@ -33,7 +33,7 @@
     <InstallSitecoreConnector>True</InstallSitecoreConnector>
     <DisableFileDeployment>False</DisableFileDeployment>
     <SitecoreDeployFolder>C:\inetpub\wwwroot\ezimporter\Website</SitecoreDeployFolder>
-    <SitecoreAccessGuid>6c896d77-4681-4fab-aadb-ebe6b70e22e4</SitecoreAccessGuid>
+    <SitecoreAccessGuid>fec649b4-d4f6-48a1-b743-d7d59ce790ef</SitecoreAccessGuid>
     <EnableValidations>False</EnableValidations>
     <ValidationSettingsFilePath>.\TDSMaster_Debug.xml</ValidationSettingsFilePath>
   </PropertyGroup>
@@ -295,6 +295,14 @@
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\Modules\EzImporter\InputColumn\HTML File.item">
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\Modules\EzImporter\InputColumn\HTML File\xsltselector.item">
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
     <SitecoreItem Include="sitecore\templates\Modules\EzImporter\InputColumnCollection.item">
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
@@ -339,11 +347,7 @@
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>
-    <SitecoreItem Include="sitecore\templates\Modules\EzImporter\Options\DropDownOption\Drop Down Option\OptionText.item">
-      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
-      <ItemDeployment>AlwaysUpdate</ItemDeployment>
-    </SitecoreItem>
-    <SitecoreItem Include="sitecore\templates\Modules\EzImporter\Options\DropDownOption\Drop Down Option\Value.item">
+    <SitecoreItem Include="sitecore\templates\Modules\EzImporter\Options\DropDownOption\Drop Down Option\Name.item">
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>

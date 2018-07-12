@@ -5,10 +5,10 @@ database: core
 path: /sitecore/client/Applications/Launchpad
 parent: {9CBE9270-1377-48CC-87B6-263F4C705C7D}
 name: Launchpad
-master: {BE42F637-4596-4FA6-AC95-5FF431320454}
+master: {00000000-0000-0000-0000-000000000000}
 template: {B11AFCCD-C286-4384-B694-4465D6C605DE}
 templatekey: Speak-DashboardPage
-created: 20171121T203843Z
+created: 20160519T084312:635992441923800000
 
 ----field----
 field: {5E642935-A6FC-48E9-B039-FE1136CED488}
@@ -71,7 +71,7 @@ content-length: 4723
 ----version----
 language: da
 version: 1
-revision: df4dc28a-e9a2-42a7-b8bd-06e157ec2c27
+revision: d4798230-2f0f-432d-82d7-7875b5a26b38
 
 ----field----
 field: {7205A57F-93B4-413A-AA9A-6B16BBC59565}
@@ -100,7 +100,7 @@ name: __Created
 key: __created
 content-length: 16
 
-20170113T074537Z
+20160519T084617Z
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -114,14 +114,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-df4dc28a-e9a2-42a7-b8bd-06e157ec2c27
+d4798230-2f0f-432d-82d7-7875b5a26b38
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20171121T205205Z
+20160519T084617Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
@@ -132,7 +132,7 @@ sitecore\admin
 ----version----
 language: de-DE
 version: 1
-revision: 26af07e7-437e-44cd-bb31-84ef96ae61f1
+revision: 44ea5e14-7071-4cfb-a66c-6bdcb9f6a6e1
 
 ----field----
 field: {7205A57F-93B4-413A-AA9A-6B16BBC59565}
@@ -161,7 +161,7 @@ name: __Created
 key: __created
 content-length: 16
 
-20170113T075138Z
+20160519T084749Z
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -175,14 +175,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-26af07e7-437e-44cd-bb31-84ef96ae61f1
+44ea5e14-7071-4cfb-a66c-6bdcb9f6a6e1
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20171121T205526Z
+20160519T084749Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
@@ -247,7 +247,7 @@ sitecore\admin
 ----version----
 language: ja-JP
 version: 1
-revision: 445fe810-24d5-4940-a831-a37bc31ccdf0
+revision: 4d4e8355-db4f-4edf-9af5-ea036c537eca
 
 ----field----
 field: {7205A57F-93B4-413A-AA9A-6B16BBC59565}
@@ -276,7 +276,7 @@ name: __Created
 key: __created
 content-length: 16
 
-20170113T075608Z
+20160519T084441Z
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -290,14 +290,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-445fe810-24d5-4940-a831-a37bc31ccdf0
+4d4e8355-db4f-4edf-9af5-ea036c537eca
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20171121T205810Z
+20160519T084441Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

@@ -26,6 +26,7 @@
     <SccProvider>SAK</SccProvider>
     <TargetFrameworkProfile />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -71,17 +72,17 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Kernel, Version=8.0.5245.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sitecore.Kernel.8.0.150812\lib\NET45\Sitecore.Kernel.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Sitecore.Kernel, Version=8.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sitecore.Kernel.8.1.160519\lib\NET45\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Logging, Version=1.2.0.30715, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sitecore.Logging.8.0.150812\lib\NET45\Sitecore.Logging.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\packages\Sitecore.Logging.8.1.160519\lib\NET45\Sitecore.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Logging.Client, Version=2.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sitecore.Logging.Client.8.1.160519\lib\NET45\Sitecore.Logging.Client.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.NVelocity, Version=0.4.2.8580, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sitecore.NVelocity.8.0.150812\lib\NET45\Sitecore.NVelocity.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\packages\Sitecore.NVelocity.8.1.160519\lib\NET45\Sitecore.NVelocity.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Services.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sitecore.Services.Core.8.0.150812\lib\NET45\Sitecore.Services.Core.dll</HintPath>
@@ -92,12 +93,10 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Update, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sitecore.Update.8.0.150812\lib\NET45\Sitecore.Update.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\packages\Sitecore.Update.8.1.160519\lib\NET45\Sitecore.Update.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.Zip, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sitecore.Zip.8.0.150812\lib\NET45\Sitecore.Zip.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Sitecore.Zip, Version=8.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sitecore.Zip.8.1.160519\lib\NET45\Sitecore.Zip.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.IO.Compression" />
@@ -166,6 +165,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataReaders\ZipedFolderDataReader.cs" />
     <Compile Include="Map\ItemDto.cs" />
     <Compile Include="Pipelines\ImportItems\BuildImportDataStructure.cs">
       <SubType>Code</SubType>

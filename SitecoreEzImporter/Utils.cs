@@ -14,7 +14,7 @@ namespace EzImporter
             }
             newName = ItemUtil.ProposeValidItemName(newName);
             newName = Regex.Replace(newName, @"\s+", " ");
-            return newName;
+            return proposedName;
         }
 
         public static string UnNamedItem

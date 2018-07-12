@@ -12,6 +12,7 @@ namespace EzImporter.Pipelines.ImportItems
             {
                 args.ImportData.Columns.Add(column.Name, typeof(string));
             }
+      args.ImportData.Columns.Add("ID", typeof(string));
             Log.Info(string.Format("EzImporter:{0} Columns defined in map.", args.Map.InputFields.Count), this);
         }
     }

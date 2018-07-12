@@ -32,10 +32,11 @@
     <SitecoreWebUrl>http://ezimporter/</SitecoreWebUrl>
     <InstallSitecoreConnector>True</InstallSitecoreConnector>
     <DisableFileDeployment>False</DisableFileDeployment>
-    <SitecoreDeployFolder>C:\inetpub\wwwroot\ezimporter\Website</SitecoreDeployFolder>
-    <SitecoreAccessGuid>6c896d77-4681-4fab-aadb-ebe6b70e22e4</SitecoreAccessGuid>
+    <SitecoreDeployFolder>C:\SIM\websites\shoosmisth\Website</SitecoreDeployFolder>
+    <SitecoreAccessGuid>fec649b4-d4f6-48a1-b743-d7d59ce790ef</SitecoreAccessGuid>
     <EnableValidations>False</EnableValidations>
     <ValidationSettingsFilePath>.\TDSCore_Debug.xml</ValidationSettingsFilePath>
+    <LightningDeployMode>False</LightningDeployMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DebugSymbols>false</DebugSymbols>

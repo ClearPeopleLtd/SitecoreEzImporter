@@ -18,30 +18,49 @@ namespace EzImporter.Pipelines.ImportItems
             args.ImportItems.AddRange(rootItem.Children); //ick
         }
 
-        private void ImportMapItems(ImportItemsArgs args, DataTable dataTable, OutputMap outputMap, ItemDto parentItem,
-            bool rootLevel)
-        {
-            var groupedTable = dataTable.GroupBy(outputMap.Fields.Select(f => f.SourceColumn).ToArray());
-            for (int i = 0; i < groupedTable.Rows.Count; i++)
+    private void ImportMapItems(ImportItemsArgs args, DataTable dataTable, OutputMap outputMap, ItemDto parentItem,
+        bool rootLevel, string parent = "")
+    {
+      switch (outputMap.Type)
+      {
+        case DataType.Tabular:
+          var groupedTable = dataTable.GroupBy(outputMap.Fields.Select(f => f.SourceColumn).ToArray());
+          for (int i = 0; i < groupedTable.Rows.Count; i++)
+          {
+            var row = groupedTable.Rows[i];
+            if (rootLevel ||
+                Convert.ToString(row[outputMap.ParentMap.NameInputField]) == parentItem.Name)
             {
-                var row = groupedTable.Rows[i];
-                if (rootLevel ||
-                    Convert.ToString(row[outputMap.ParentMap.NameInputField]) == parentItem.Name)
+              var createdItem = CreateItem(row, outputMap);
+              createdItem.Parent = parentItem;
+              parentItem.Children.Add(createdItem);
+              if (outputMap.ChildMaps != null
+                  && outputMap.ChildMaps.Any())
+              {
+                foreach (var childMap in outputMap.ChildMaps)
                 {
-                    var createdItem = CreateItem(row, outputMap);
-                    createdItem.Parent = parentItem;
-                    parentItem.Children.Add(createdItem);
-                    if (outputMap.ChildMaps != null
-                        && outputMap.ChildMaps.Any())
-                    {
-                        foreach (var childMap in outputMap.ChildMaps)
-                        {
-                            ImportMapItems(args, dataTable, childMap, createdItem, false);
-                        }
-                    }
+                  ImportMapItems(args, dataTable, childMap, createdItem, false);
                 }
+              }
             }
-        }
+          }
+          break;
+        case DataType.Hierarchichal:
+          var currentleveltable  = dataTable.Select("father='" + parent + "'");
+          foreach (var row in currentleveltable)
+          {
+            var createdItem = CreateItem(row, outputMap);
+            createdItem.Parent = parentItem;
+            parentItem.Children.Add(createdItem);
+            ImportMapItems(args, dataTable, outputMap, createdItem, false,row["ID"].ToString());
+          }
+
+          break;
+        default:
+          break;
+      }
+
+    }
 
         private ItemDto CreateItem(DataRow dataRow, OutputMap outputMap)
         {
