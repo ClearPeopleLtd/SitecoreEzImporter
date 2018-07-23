@@ -24,7 +24,7 @@ namespace EzImporter.Pipelines.ImportItems
             {
                 args.AddMessage("Invalid item name(s) in import data.");
                 args.ErrorDetail = string.Join("\n\n", Errors);
-                args.AbortPipeline();
+                //args.AbortPipeline();
             }
         }
 

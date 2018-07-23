@@ -104,7 +104,7 @@ namespace EzImporter.Pipelines.ImportItems
             if (field != null)
             {
               FieldUpdateManager.UpdateField(field, fieldValue, args.ImportOptions);
-              Log.Info(string.Format("'{0}' field set to '{1}'", key, fieldValue), this);
+              Log.Debug(string.Format("'{0}' field set to '{1}'", key, fieldValue), this);
             }
             else
             {

@@ -22,5 +22,10 @@ namespace EzImporter.Map.CustomItems
         {
             get { return ItemExtensions.GetLinkItem(this.InnerItem, "ItemNameField"); }
         }
+
+    public string PathPattern
+    {
+      get { return this.InnerItem["PathPattern"];}
     }
+  }
 }

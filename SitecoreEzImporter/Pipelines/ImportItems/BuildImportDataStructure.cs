@@ -1,8 +1,10 @@
 ﻿using EzImporter.Extensions;
 using EzImporter.Map;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace EzImporter.Pipelines.ImportItems
 {
@@ -11,11 +13,12 @@ namespace EzImporter.Pipelines.ImportItems
         public override void Process(ImportItemsArgs args)
         {
             var rootItem = new ItemDto("<root>"); //ick
-            foreach (var outputMap in args.Map.OutputMaps)
-            {
-                ImportMapItems(args, args.ImportData, outputMap, rootItem, true); //ick
-            }
-            args.ImportItems.AddRange(rootItem.Children); //ick
+                                                  //foreach (var outputMap in args.Map.OutputMaps)
+                                                  //{
+                                                  //    ImportMapItems(args, args.ImportData, outputMap, rootItem, true); //ick
+                                                  //}
+      ImportMapItems(args, args.ImportData, args.Map.OutputMaps.First(), rootItem, true);
+      args.ImportItems.AddRange(rootItem.Children); //ick
         }
 
     private void ImportMapItems(ImportItemsArgs args, DataTable dataTable, OutputMap outputMap, ItemDto parentItem,
@@ -49,10 +52,20 @@ namespace EzImporter.Pipelines.ImportItems
           var currentleveltable  = dataTable.Select("father='" + parent + "'");
           foreach (var row in currentleveltable)
           {
-            var createdItem = CreateItem(row, outputMap);
-            createdItem.Parent = parentItem;
-            parentItem.Children.Add(createdItem);
-            ImportMapItems(args, dataTable, outputMap, createdItem, false,row["ID"].ToString());
+            foreach (var map in args.Map.OutputMaps)
+            {
+              var reg = new Regex(map.PathPattern);
+              if (reg.IsMatch(row["Path"].ToString()))
+              {
+                var createdItem = CreateItem(row, map);
+                createdItem.Parent = parentItem;
+                parentItem.Children.Add(createdItem);
+                ImportMapItems(args, dataTable, map, createdItem, false, row["ID"].ToString());
+                break;
+              }
+                
+            }
+            
           }
 
           break;
@@ -61,8 +74,9 @@ namespace EzImporter.Pipelines.ImportItems
       }
 
     }
+    
 
-        private ItemDto CreateItem(DataRow dataRow, OutputMap outputMap)
+      private ItemDto CreateItem(DataRow dataRow, OutputMap outputMap)
         {
             var itemName = Convert.ToString(dataRow[outputMap.NameInputField]);
             var item = new ItemDto(itemName)

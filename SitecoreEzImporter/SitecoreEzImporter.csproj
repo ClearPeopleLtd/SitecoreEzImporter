@@ -166,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataReaders\ZipedFolderDataReader.cs" />
+    <Compile Include="FieldUpdater\DateFieldUpdater.cs" />
     <Compile Include="Map\ItemDto.cs" />
     <Compile Include="Pipelines\ImportItems\BuildImportDataStructure.cs">
       <SubType>Code</SubType>

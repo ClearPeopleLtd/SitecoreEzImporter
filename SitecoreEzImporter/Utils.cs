@@ -1,4 +1,5 @@
-﻿using Sitecore.Data.Items;
+﻿using Sitecore.Configuration;
+using Sitecore.Data.Items;
 using System.Text.RegularExpressions;
 
 namespace EzImporter
@@ -14,7 +15,9 @@ namespace EzImporter
             }
             newName = ItemUtil.ProposeValidItemName(newName);
             newName = Regex.Replace(newName, @"\s+", " ");
-            return proposedName;
+      
+            newName = newName.Replace("=", "").Replace("_", "");
+            return newName;
         }
 
         public static string UnNamedItem

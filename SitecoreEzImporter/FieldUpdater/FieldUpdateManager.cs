@@ -30,6 +30,10 @@ namespace EzImporter.FieldUpdater
             {
                 return new TreeListFieldUpdater();
             }
+            if(field.Type == "Date" || field.Type == "DateTime")
+      {
+        return new DateFieldUpdater();
+      }
             return new TextFieldUpdater();
         }
     }

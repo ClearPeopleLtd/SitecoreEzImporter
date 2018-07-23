@@ -16,7 +16,17 @@ namespace EzImporter.Map
 
             var mapInfo = new ItemImportMap
             {
-                InputFields = inputColumnsItem.Children.Select(c => new InputField {Name = c.Name, XsltSelector = c["xsltselector"]}).ToList(),
+                InputFields = inputColumnsItem.Children.Select(c => new InputField {Name = c.Name, XsltSelector = c["xsltselector"],
+                Property = c["Property"], TextOnly = ((Sitecore.Data.Fields.CheckboxField)c.Fields["TextOnly"]).Checked, ReplacementText = c["ReplacementText"],
+                  Fields = c.Children.Select(f => new InputField
+                {
+                  Name = f.Name,
+                  XsltSelector = f["xsltselector"],
+                  Property = f["Property"],
+                  TextOnly = ((Sitecore.Data.Fields.CheckboxField)f.Fields["TextOnly"]).Checked,
+                  ReplacementText = f["ReplacementText"]
+                }).ToList()
+                }).ToList(),
                 OutputMaps = mapItem.Children
                     .Where(c => c.InheritsFrom(OutputMapTemplateItem.TemplateId))
                     .Select(om => CreateOutputMap(om, null))
@@ -32,6 +42,7 @@ namespace EzImporter.Map
             var outputMapCustomItem = new OutputMapTemplateItem(item);
             outputMap.TemplateId = outputMapCustomItem.TargetTemplate.ID;
             outputMap.NameInputField = outputMapCustomItem.ItemNameField.Name;
+      outputMap.PathPattern = outputMapCustomItem.PathPattern;
             var fieldsCollection =
                 item.Children.FirstOrDefault(c => c.InheritsFrom(OutputFieldCollectionItem.TemplateId));
             if (fieldsCollection != null)
