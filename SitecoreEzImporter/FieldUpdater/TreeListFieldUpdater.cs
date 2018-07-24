@@ -20,9 +20,7 @@ namespace EzImporter.FieldUpdater
                 {
                     var query = ID.IsID(value)
                         ? ".//*[@@id='" + ID.Parse(value) + "']"
-                        : "." +
-                          Sitecore.StringUtil.EnsurePrefix('/',
-                              value.Replace(importOptions.TreePathValuesImportSeparator, "/"));
+                        : ".//*[@Value='" + value + "']";
                     var item = selectionSource.Axes.SelectSingleItem(query);
                     if (item != null)
                     {

@@ -120,18 +120,14 @@ namespace EzImporter.DataReaders
         int filecounter = 0;
         foreach (var file in Directory.GetFiles(sDir, "*.aspx*"))
         {
-          //This is where you would manipulate each file found, e.g.:
-          if (!file.Contains("index.aspx"))
-          {
+          
             Log.Info(file, this);
             var row = args.ImportData.NewRow();
             row["father"] = parent;
             row["ID"] = Guid.NewGuid();
             row["Path"] = file.Replace(sDir, "");
             PopulateContent(file, row, args);
-          }
-          if (++filecounter >= 10)
-            break;
+         
         }
 
       }
