@@ -10,16 +10,18 @@ namespace EzImporter.Pipelines.ImportItems
 {
     public class BuildImportDataStructure : ImportItemsProcessor
     {
-        public override void Process(ImportItemsArgs args)
-        {
-            var rootItem = new ItemDto("<root>"); //ick
-                                                  //foreach (var outputMap in args.Map.OutputMaps)
-                                                  //{
-                                                  //    ImportMapItems(args, args.ImportData, outputMap, rootItem, true); //ick
-                                                  //}
+    private List<Regex> OutputMapRegexs { get; set; }
+    public override void Process(ImportItemsArgs args)
+    {
+      var rootItem = new ItemDto("<root>");
+      OutputMapRegexs = new List<Regex>();
+      foreach (var map in args.Map.OutputMaps)
+      {
+        OutputMapRegexs.Add(new Regex(map.PathPattern, RegexOptions.Compiled));
+      }
       ImportMapItems(args, args.ImportData, args.Map.OutputMaps.First(), rootItem, true);
       args.ImportItems.AddRange(rootItem.Children); //ick
-        }
+    }
 
     private void ImportMapItems(ImportItemsArgs args, DataTable dataTable, OutputMap outputMap, ItemDto parentItem,
         bool rootLevel, string parent = "")
@@ -52,9 +54,10 @@ namespace EzImporter.Pipelines.ImportItems
           var currentleveltable  = dataTable.Select("father='" + parent + "'");
           foreach (var row in currentleveltable)
           {
-            foreach (var map in args.Map.OutputMaps)
+            for (int i=0; i<args.Map.OutputMaps.Count; i++)
             {
-              var reg = new Regex(map.PathPattern);
+              var map = args.Map.OutputMaps[i];
+              var reg = OutputMapRegexs[i];
               if (reg.IsMatch(row["Path"].ToString()))
               {
                 var createdItem = CreateItem(row, map);

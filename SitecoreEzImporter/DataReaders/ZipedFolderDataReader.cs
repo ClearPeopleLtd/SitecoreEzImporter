@@ -92,7 +92,7 @@ namespace EzImporter.DataReaders
           row["father"] = parent;
           row["ID"] = Guid.NewGuid();
           parent = row["ID"].ToString();
-          row["Path"] = mainroots[0].FullName.Replace(sDir, "");
+          row["Path"] = mainroots[0].FullName;//.Replace(sDir, "");
           PopulateContent(mainroots[0].FullName, row, args);
         }
 
@@ -106,7 +106,7 @@ namespace EzImporter.DataReaders
             row["Name"] = di.Name.Replace("-", " ");
             row["father"] = parent;
             row["ID"] = Guid.NewGuid();
-            row["Path"] = di.FullName.Replace(sDir, "");
+            row["Path"] = di.FullName;//.Replace(sDir, "");
             var roots = di.GetFiles("Index.aspx");
             if(roots!= null && roots.Count()==1)
             {
@@ -125,9 +125,10 @@ namespace EzImporter.DataReaders
             var row = args.ImportData.NewRow();
             row["father"] = parent;
             row["ID"] = Guid.NewGuid();
-            row["Path"] = file.Replace(sDir, "");
+          row["Path"] = file;//.Replace(sDir, "");
             PopulateContent(file, row, args);
-         
+          //if (++filecounter >= 10)
+          //  break;
         }
 
       }
@@ -162,14 +163,26 @@ namespace EzImporter.DataReaders
               var node = doc.DocumentNode.SelectSingleNode(field.XsltSelector);
               if (node != null)
               {
-                var content = node.Attributes["content"];
-                if (content != null)
+                if (!string.IsNullOrWhiteSpace(field.Property))
                 {
-                  row[field.Name] = content.Value;                  
+                  var content = node.Attributes[field.Property];
+                  if (content != null)
+                  {
+                    row[field.Name] = content.Value;
+                  }
                 }
                 else
                 {
-                  row[field.Name] = GetCleanContent(node, field);
+
+                  var content = node.Attributes["content"];
+                  if (content != null)
+                  {
+                    row[field.Name] = content.Value;
+                  }
+                  else
+                  {
+                    row[field.Name] = GetCleanContent(node, field);
+                  }
                 }
               }
             }

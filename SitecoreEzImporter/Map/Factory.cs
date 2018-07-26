@@ -17,12 +17,12 @@ namespace EzImporter.Map
             var mapInfo = new ItemImportMap
             {
                 InputFields = inputColumnsItem.Children.Select(c => new InputField {Name = c.Name, XsltSelector = c["xsltselector"],
-                Property = c["Property"], TextOnly = ((Sitecore.Data.Fields.CheckboxField)c.Fields["TextOnly"]).Checked, ReplacementText = c["ReplacementText"],
+                Property = c["property"], TextOnly = ((Sitecore.Data.Fields.CheckboxField)c.Fields["TextOnly"]).Checked, ReplacementText = c["ReplacementText"],
                   Fields = c.Children.Select(f => new InputField
                 {
                   Name = f.Name,
                   XsltSelector = f["xsltselector"],
-                  Property = f["Property"],
+                  Property = f["property"],
                   TextOnly = ((Sitecore.Data.Fields.CheckboxField)f.Fields["TextOnly"]).Checked,
                   ReplacementText = f["ReplacementText"]
                 }).ToList()
