@@ -15,6 +15,7 @@ namespace EzImporter.Pipelines.ImportItems
         {
             var originalIndexingSetting = Sitecore.Configuration.Settings.Indexing.Enabled;
             Sitecore.Configuration.Settings.Indexing.Enabled = false;
+      TreeListFieldUpdater.ClearCache();
             using (new BulkUpdateContext())
             {
                 using (new LanguageSwitcher(args.TargetLanguage))

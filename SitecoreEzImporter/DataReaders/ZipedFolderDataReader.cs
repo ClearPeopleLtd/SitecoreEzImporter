@@ -221,7 +221,7 @@ namespace EzImporter.DataReaders
         {
           //This is where you would manipulate each file found, e.g.:
           Log.Info(file, this);      
-          if(!file.EndsWith(".aspx"))
+          if(!file.EndsWith(".aspx") && !file.Contains("search.aspx"))
           {
             DirectoryInfo di = new DirectoryInfo(file.Substring(0, file.IndexOf(".aspx")));
             MoveToFolder(new FileInfo(file), di);
@@ -267,7 +267,7 @@ namespace EzImporter.DataReaders
           }
         }
       }
-      return field.TextOnly ? node.InnerText : node.InnerHtml;
+      return field.TextOnly ? new string(node.InnerText.Where(c => !char.IsControl(c)).ToArray()) : node.InnerHtml;
     }
     public string Decompress(FileInfo fileToDecompress)
     {
