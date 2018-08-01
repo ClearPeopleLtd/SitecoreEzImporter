@@ -115,6 +115,10 @@ namespace EzImporter.Pipelines.ImportItems
                       key), this);
             }
           }
+          if(importItem.TemplateId != item.TemplateID)
+          {
+            item.ChangeTemplate(item.Database.GetTemplate(item.TemplateID));
+          }
           return item;
         }
       }
