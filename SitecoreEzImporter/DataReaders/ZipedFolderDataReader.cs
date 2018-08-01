@@ -8,6 +8,7 @@ using System.Data;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Web;
 
 namespace EzImporter.DataReaders
 {
@@ -142,7 +143,7 @@ namespace EzImporter.DataReaders
     {
       FileInfo fi = new FileInfo(file);
       var doc = new HtmlDocument();
-      doc.Load(file);
+      doc.Load(file,true);
       if (doc.DocumentNode != null)
       {
 
@@ -168,7 +169,7 @@ namespace EzImporter.DataReaders
                   var content = node.Attributes[field.Property];
                   if (content != null)
                   {
-                    row[field.Name] = content.Value;
+                    row[field.Name] = HttpUtility.HtmlDecode(content.Value);
                   }
                 }
                 else
@@ -177,7 +178,7 @@ namespace EzImporter.DataReaders
                   var content = node.Attributes["content"];
                   if (content != null)
                   {
-                    row[field.Name] = content.Value;
+                    row[field.Name] = HttpUtility.HtmlDecode(content.Value);
                   }
                   else
                   {
@@ -218,9 +219,7 @@ namespace EzImporter.DataReaders
           }
         }
         foreach (var file in Directory.GetFiles(sDir, "*.aspx*"))
-        {
-          //This is where you would manipulate each file found, e.g.:
-          Log.Info(file, this);      
+        {                       
           if(!file.EndsWith(".aspx") && !file.Contains("search.aspx"))
           {
             DirectoryInfo di = new DirectoryInfo(file.Substring(0, file.IndexOf(".aspx")));
@@ -242,7 +241,9 @@ namespace EzImporter.DataReaders
       int startindex = file.FullName.IndexOf(".aspx") + 5;
       string firstpart = file.FullName.Substring(startindex,file.FullName.Length - startindex);
       firstpart = Utils.GetValidItemName(firstpart);
-      file.MoveTo(directory.FullName + "/" + firstpart + ".aspx");      
+      string target = directory.FullName + "/" + firstpart + ".aspx";
+      file.MoveTo(target);    
+      Log.Info(string.Format("Moving file from {0} to {1}"),file.FullName,target),this);
     }
     private string GetCleanContent(HtmlNode node, Map.InputField field)
     {
