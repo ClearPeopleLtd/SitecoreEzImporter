@@ -89,7 +89,7 @@ namespace EzImporter.DataReaders
         if (mainroots != null && mainroots.Count() == 1)
         {
           var row = args.ImportData.NewRow();
-          row["Name"] = sDirinfo.Name.Replace("-", " ");
+          row["Name"] = sDirinfo.Name.Replace("-", " ").Trim();
           row["father"] = parent;
           row["ID"] = Guid.NewGuid();
           parent = row["ID"].ToString();
@@ -104,7 +104,7 @@ namespace EzImporter.DataReaders
           DirectoryInfo di = new DirectoryInfo(d);
           if (!skipfolders.Contains(di.Name))
           {
-            row["Name"] = di.Name.Replace("-", " ");
+            row["Name"] = di.Name.Replace("-", " ").Trim();
             row["father"] = parent;
             row["ID"] = Guid.NewGuid();
             row["Path"] = di.FullName;//.Replace(sDir, "");
@@ -161,31 +161,39 @@ namespace EzImporter.DataReaders
           {
             if (!string.IsNullOrWhiteSpace(field.XsltSelector))
             {
-              var node = doc.DocumentNode.SelectSingleNode(field.XsltSelector);
-              if (node != null)
+              var nodes = doc.DocumentNode.SelectNodes(field.XsltSelector);
+              row[field.Name] = string.Empty;
+              if (nodes != null && nodes.Any())
               {
-                if (!string.IsNullOrWhiteSpace(field.Property))
+                foreach (var node in nodes)
                 {
-                  var content = node.Attributes[field.Property];
-                  if (content != null)
+                  if (node != null)
                   {
-                    row[field.Name] = HttpUtility.HtmlDecode(content.Value);
-                  }
-                }
-                else
-                {
+                    if (!string.IsNullOrWhiteSpace(field.Property))
+                    {
+                      var content = node.Attributes[field.Property];
+                      if (content != null)
+                      {
+                        row[field.Name] += HttpUtility.HtmlDecode(content.Value) + " ";
+                      }
+                    }
+                    else
+                    {
 
-                  var content = node.Attributes["content"];
-                  if (content != null)
-                  {
-                    row[field.Name] = HttpUtility.HtmlDecode(content.Value);
-                  }
-                  else
-                  {
-                    row[field.Name] = GetCleanContent(node, field);
+                      var content = node.Attributes["content"];
+                      if (content != null)
+                      {
+                        row[field.Name] += HttpUtility.HtmlDecode(content.Value) + " ";
+                      }
+                      else
+                      {
+                        row[field.Name] += GetCleanContent(node, field) + " ";
+                      }
+                    }
                   }
                 }
               }
+              
             }
           }
 
@@ -242,8 +250,11 @@ namespace EzImporter.DataReaders
       string firstpart = file.FullName.Substring(startindex,file.FullName.Length - startindex);
       firstpart = Utils.GetValidItemName(firstpart);
       string target = directory.FullName + "/" + firstpart + ".aspx";
-      file.MoveTo(target);    
-      Log.Info(string.Format("Moving file from {0} to {1}"),file.FullName,target),this);
+      if (File.Exists(target))
+        File.Delete(target);
+      file.MoveTo(target);
+      
+      Log.Info(string.Format("Moving file from {0} to {1}",file.FullName,target),this);
     }
     private string GetCleanContent(HtmlNode node, Map.InputField field)
     {

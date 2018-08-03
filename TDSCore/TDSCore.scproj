@@ -32,7 +32,7 @@
     <SitecoreWebUrl>http://ezimporter/</SitecoreWebUrl>
     <InstallSitecoreConnector>True</InstallSitecoreConnector>
     <DisableFileDeployment>False</DisableFileDeployment>
-    <SitecoreDeployFolder>C:\SIM\websites\shoosmisth\Website</SitecoreDeployFolder>
+    <SitecoreDeployFolder>C:\SIM\websites\shoosmiths\Website</SitecoreDeployFolder>
     <SitecoreAccessGuid>fec649b4-d4f6-48a1-b743-d7d59ce790ef</SitecoreAccessGuid>
     <EnableValidations>False</EnableValidations>
     <ValidationSettingsFilePath>.\TDSCore_Debug.xml</ValidationSettingsFilePath>

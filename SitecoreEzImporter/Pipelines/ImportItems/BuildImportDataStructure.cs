@@ -82,7 +82,7 @@ namespace EzImporter.Pipelines.ImportItems
       private ItemDto CreateItem(DataRow dataRow, OutputMap outputMap)
         {
             var itemName = Convert.ToString(dataRow[outputMap.NameInputField]);
-            var item = new ItemDto(itemName)
+            var item = new ItemDto(itemName.Trim())
             {
                 TemplateId = outputMap.TemplateId
             };
