@@ -42,7 +42,8 @@ namespace EzImporter.Map
             var outputMapCustomItem = new OutputMapTemplateItem(item);
             outputMap.TemplateId = outputMapCustomItem.TargetTemplate.ID;
             outputMap.NameInputField = outputMapCustomItem.ItemNameField.Name;
-      outputMap.PathPattern = outputMapCustomItem.PathPattern;
+            outputMap.PathPattern = outputMapCustomItem.PathPattern;
+
             var fieldsCollection =
                 item.Children.FirstOrDefault(c => c.InheritsFrom(OutputFieldCollectionItem.TemplateId));
             if (fieldsCollection != null)

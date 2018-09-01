@@ -79,6 +79,11 @@ namespace EzImporter.Tasks
             get { return InnerItem["CsvDelimiter"]; }
         }
 
+        public string QuotationMark
+    {
+          get { return InnerItem["QuotationMark"]; }
+        }
+
         public string ExistingItemHandling
         {
             get { return GetDropDownItemValue(InnerItem, "ExistingItemHandling"); }
@@ -112,5 +117,10 @@ namespace EzImporter.Tasks
         {
             get { return InnerItem["TreePathValuesImportSeparator"]; }
         }
-    }
+
+        public string DataStructureType
+        {
+          get { return InnerItem["DataStructureType"]; }
+        }
+  }
 }

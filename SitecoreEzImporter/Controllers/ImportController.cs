@@ -39,9 +39,11 @@ namespace EzImporter.Controllers
                     RootItemId = new ID(importModel.ImportLocationId),
                     TargetLanguage = Sitecore.Globalization.Language.Parse(languageItem.Name),
                     Map = Map.Factory.BuildMapInfo(new ID(importModel.MappingId)),
+
                     ImportOptions = new ImportOptions
                     {
                         CsvDelimiter = new[] {importModel.CsvDelimiter},
+                        QuotationMark = importModel.QuotationMark,
                         MultipleValuesImportSeparator = importModel.MultipleValuesSeparator,
                         TreePathValuesImportSeparator = @"\",
                         FirstRowAsColumnNames = importModel.FirstRowAsColumnNames
@@ -51,6 +53,8 @@ namespace EzImporter.Controllers
                     Enum.Parse(typeof(ExistingItemHandling), importModel.ExistingItemHandling);
                 args.ImportOptions.InvalidLinkHandling = (InvalidLinkHandling)
                     Enum.Parse(typeof(InvalidLinkHandling), importModel.InvalidLinkHandling);
+                args.ImportOptions.DataStructureType = (DataStructureType)
+                    Enum.Parse(typeof(DataStructureType), importModel.DataStructureType);
 
                 Sitecore.Diagnostics.Log.Info(
                     string.Format("EzImporter: mappingId:{0} mediaItemId:{1} firstRowAsColumnNames:{2}",
@@ -97,8 +101,10 @@ namespace EzImporter.Controllers
             var model = new SettingsModel
             {
                 CsvDelimiter = options.CsvDelimiter[0],
+                QuotationMark = options.QuotationMark,
                 ExistingItemHandling = options.ExistingItemHandling.ToString(),
                 InvalidLinkHandling = options.InvalidLinkHandling.ToString(),
+                DataStructureType = options.DataStructureType.ToString(),
                 MultipleValuesSeparator = options.MultipleValuesImportSeparator,
                 FirstRowAsColumnNames = options.FirstRowAsColumnNames
             };

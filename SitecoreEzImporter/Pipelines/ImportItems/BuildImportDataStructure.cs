@@ -26,9 +26,9 @@ namespace EzImporter.Pipelines.ImportItems
     private void ImportMapItems(ImportItemsArgs args, DataTable dataTable, OutputMap outputMap, ItemDto parentItem,
         bool rootLevel, string parent = "")
     {
-      switch (outputMap.Type)
+      switch (args.ImportOptions.DataStructureType)
       {
-        case DataType.Tabular:
+        case DataStructureType.Tabular:
           var groupedTable = dataTable.GroupBy(outputMap.Fields.Select(f => f.SourceColumn).ToArray());
           for (int i = 0; i < groupedTable.Rows.Count; i++)
           {
@@ -39,8 +39,7 @@ namespace EzImporter.Pipelines.ImportItems
               var createdItem = CreateItem(row, outputMap);
               createdItem.Parent = parentItem;
               parentItem.Children.Add(createdItem);
-              if (outputMap.ChildMaps != null
-                  && outputMap.ChildMaps.Any())
+              if (outputMap.ChildMaps != null && outputMap.ChildMaps.Any())
               {
                 foreach (var childMap in outputMap.ChildMaps)
                 {
@@ -50,7 +49,7 @@ namespace EzImporter.Pipelines.ImportItems
             }
           }
           break;
-        case DataType.Hierarchichal:
+        case DataStructureType.Hierarchichal:
           var currentleveltable  = dataTable.Select("father='" + parent + "'");
           foreach (var row in currentleveltable)
           {

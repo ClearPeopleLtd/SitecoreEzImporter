@@ -1,14 +1,14 @@
 ----item----
 version: 1
-id: {4D4D6730-A022-42DC-B704-EBE3CE159710}
+id: {4D2FA91B-13C8-4167-BB85-027BFA631C12}
 database: master
-path: /sitecore/templates/Modules/EzImporter/Import Command/Import Parameters/Database
-parent: {D027C5E1-13DA-4E67-B591-09DCB246C36F}
-name: Database
+path: /sitecore/templates/Modules/EzImporter/Import Command/Import Parameters Advanced/QuotationMark
+parent: {C61B7AC8-DAE0-468E-8E67-332CB142FDD2}
+name: QuotationMark
 master: {00000000-0000-0000-0000-000000000000}
 template: {455A3E98-A627-4B40-8035-E683A0331AC7}
 templatekey: Template field
-created: 20180724T155213:636680443334770000
+created: 20180831T161113:636713286733730000
 
 ----field----
 field: {AB162CC0-DC80-4ABF-8871-998EE5D7BA32}
@@ -23,33 +23,47 @@ name: __Sortorder
 key: __sortorder
 content-length: 3
 
-100
+125
 ----version----
 language: en
 version: 1
-revision: 33309fe1-6ef8-4a5f-87ae-564af7a435e5
+revision: 6257f99b-cfbb-4c29-8ca0-545c262a6844
 
+----field----
+field: {577F1689-7DE4-4AD2-A15F-7FDC1759285F}
+name: __Long description
+key: __long description
+content-length: 87
+
+Text delimiter. Useful when the text within a single cell contains the column delimiter
+----field----
+field: {9541E67D-CE8C-4225-803D-33F7F29F09EF}
+name: __Short description
+key: __short description
+content-length: 87
+
+Text delimiter. Useful when the text within a single cell contains the column delimiter
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
 key: __created
 content-length: 16
 
-20160622T222434Z
+20180831T161114Z
 ----field----
 field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
 name: __Revision
 key: __revision
 content-length: 36
 
-33309fe1-6ef8-4a5f-87ae-564af7a435e5
+6257f99b-cfbb-4c29-8ca0-545c262a6844
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20180831T160940Z
+20180831T161358Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

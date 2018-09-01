@@ -18,7 +18,11 @@
                     app.InvalidLinkHandlingDataSource.on("change:hasItems", function () {
                         app.InvalidLinkHandling.set("selectedValue", data.InvalidLinkHandling);
                     });
+                    app.DataStructureTypeDataSource.on("change:hasItems", function () {
+                      app.DataStructureType.set("selectedValue", data.DataStructureType);
+                    });
                     this.CsvDelimiter.viewModel.text(data.CsvDelimiter);
+                    this.QuotationMark.viewModel.text(data.QuotationMark);
                     this.MultipleValuesImportSeparator.viewModel.text(data.MultipleValuesSeparator);
                     this.FirstRowAsColumnNamesCheckBox.set("isChecked", data.FirstRowAsColumnNames);
                 },
@@ -58,7 +62,9 @@
             var language = this.TargetLanguageCombo.viewModel.selectedItemId();
             var existingItemHandling = this.ExistingItemHandling.viewModel.selectedItemId();
             var invalidLinkHandling = this.InvalidLinkHandling.viewModel.selectedItem().itemName;
+            var dataStructureType = this.DataStructureType.viewModel.selectedItem().itemName;
             var csvDelimiter = this.CsvDelimiter.viewModel.text();
+            var quotationMark = this.QuotationMark.viewModel.text();
             var multipleValuesSeparator = this.MultipleValuesImportSeparator.viewModel.text();
             var mappingId = this.ExistingMapping.viewModel.selectedItemId();
             var firstRowAsColumnNames = this.FirstRowAsColumnNamesCheckBox.viewModel.isChecked();
@@ -76,7 +82,9 @@
                     Language: language,
                     ExistingItemHandling: existingItemHandling,
                     InvalidLinkHandling: invalidLinkHandling,
+                    DataStructureType: dataStructureType,
                     CsvDelimiter: csvDelimiter,
+                    QuotationMark: quotationMark,
                     MultipleValuesSeparator: multipleValuesSeparator,
                     MediaItemId: this.uploadedFiles[i],
                     FirstRowAsColumnNames: firstRowAsColumnNames
