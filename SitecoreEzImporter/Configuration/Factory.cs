@@ -21,10 +21,18 @@ namespace EzImporter.Configuration
                 invalidLinkHandling = EzImporter.InvalidLinkHandling.SetBroken;
             }
 
+            var dataStructureTypeValue = Sitecore.Configuration.Settings.GetSetting("EzImporter.DataStructureType",
+                "Tabular");
+            DataStructureType dataStructureType;
+            if (!Enum.TryParse<DataStructureType>(dataStructureTypeValue, out dataStructureType))
+            {
+              dataStructureType = EzImporter.DataStructureType.Tabular;
+            }
             return new ImportOptions
             {
                 ExistingItemHandling = existingItemHandling,
                 InvalidLinkHandling = invalidLinkHandling,
+                DataStructureType = dataStructureType,
                 MultipleValuesImportSeparator =
                     Sitecore.Configuration.Settings.GetSetting("EzImporter.MultipleValuesImportSeparator", "|"),
                 TreePathValuesImportSeparator =
@@ -33,6 +41,8 @@ namespace EzImporter.Configuration
                 {
                     Sitecore.Configuration.Settings.GetSetting("EzImporter.CsvDelimiter", ",")
                 },
+                QuotationMark =
+                      Sitecore.Configuration.Settings.GetSetting("EzImporter.QuotationMark", @""""),
                 FirstRowAsColumnNames = Sitecore.Configuration.Settings.GetBoolSetting("EzImporter.FirstRowAsColumnNames", true)
             };
         }

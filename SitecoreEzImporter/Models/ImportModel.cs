@@ -7,7 +7,9 @@
         public string Language { get; set; }
         public string ExistingItemHandling { get; set; }
         public string InvalidLinkHandling { get; set; }
+        public string DataStructureType { get; set; }
         public string CsvDelimiter { get; set; }
+        public string QuotationMark { get; set; }
         public string MultipleValuesSeparator { get; set; }
         public string MediaItemId { get; set; }
         public bool FirstRowAsColumnNames { get; set; }

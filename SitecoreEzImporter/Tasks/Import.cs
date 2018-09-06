@@ -23,15 +23,22 @@ namespace EzImporter.Tasks
                 + " importMap=" + importCommand.ImportMapId
                 + " database=" + importCommand.Database.Name
                 + " csvDelimiter=" + importCommand.CsvDelimiter
+                + " QuotationMark=" + importCommand.QuotationMark
                 + " ExistingItemHandling=" + importCommand.ExistingItemHandling
                 + " InvalidLinkHandling=" + importCommand.InvalidLinkHandling
                 + " MultipleValuesImportSeparator=" + importCommand.MultipleValuesImportSeparator
-                + " TreePathValuesImportSeparator=" + importCommand.TreePathValuesImportSeparator, this);
+                + " TreePathValuesImportSeparator=" + importCommand.TreePathValuesImportSeparator
+                + " DataStructureType=" + importCommand.DataStructureType
+                , this);
 
             var options = Factory.GetDefaultImportOptions();
             if (importCommand.CsvDelimiter != null)
             {
                 options.CsvDelimiter = new[] {importCommand.CsvDelimiter};
+            }
+            if (importCommand.QuotationMark != null)
+            {
+                options.QuotationMark = importCommand.QuotationMark;
             }
             if (importCommand.ExistingItemHandling != null)
             {
@@ -42,6 +49,11 @@ namespace EzImporter.Tasks
             {
                 options.InvalidLinkHandling = (InvalidLinkHandling)
                     Enum.Parse(typeof (InvalidLinkHandling), importCommand.InvalidLinkHandling);
+            }
+            if (importCommand.DataStructureType != null)
+            {
+              options.DataStructureType = (DataStructureType)
+                  Enum.Parse(typeof(DataStructureType), importCommand.DataStructureType);
             }
             if (importCommand.MultipleValuesImportSeparator != null)
             {

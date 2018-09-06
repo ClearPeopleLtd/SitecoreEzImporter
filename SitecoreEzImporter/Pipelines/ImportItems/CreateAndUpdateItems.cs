@@ -15,7 +15,7 @@ namespace EzImporter.Pipelines.ImportItems
         {
             var originalIndexingSetting = Sitecore.Configuration.Settings.Indexing.Enabled;
             Sitecore.Configuration.Settings.Indexing.Enabled = false;
-      TreeListFieldUpdater.ClearCache();
+            TreeListFieldUpdater.ClearCache();
             using (new BulkUpdateContext())
             {
                 using (new LanguageSwitcher(args.TargetLanguage))
@@ -34,7 +34,7 @@ namespace EzImporter.Pipelines.ImportItems
             bool rootLevel)
         {
             if (rootLevel ||
-                importItem.Parent.Name == parentItem.Name)
+                string.Equals(importItem.Parent.Name, parentItem.Name, StringComparison.OrdinalIgnoreCase))
             {
                 var createdItem = CreateItem(args, importItem, parentItem);
                 if (createdItem != null

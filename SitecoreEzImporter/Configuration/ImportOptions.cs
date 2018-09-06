@@ -6,11 +6,15 @@
 
         public ExistingItemHandling ExistingItemHandling { get; set; }
 
+        public DataStructureType DataStructureType { get; set; }
+
         public string MultipleValuesImportSeparator { get; set; }
 
         public string TreePathValuesImportSeparator { get; set; }
 
         public string[] CsvDelimiter { get; set; }
+
+        public string QuotationMark { get; set; }
 
         public bool FirstRowAsColumnNames { get; set; }
     }

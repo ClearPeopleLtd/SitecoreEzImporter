@@ -1,33 +1,40 @@
 ----item----
 version: 1
-id: {4D4D6730-A022-42DC-B704-EBE3CE159710}
+id: {84B0650B-39A6-4093-A4D0-596A2CAF5989}
 database: master
-path: /sitecore/templates/Modules/EzImporter/Import Command/Import Parameters/Database
-parent: {D027C5E1-13DA-4E67-B591-09DCB246C36F}
-name: Database
+path: /sitecore/templates/Modules/EzImporter/Import Command/Import Parameters Advanced/DataStructureType
+parent: {C61B7AC8-DAE0-468E-8E67-332CB142FDD2}
+name: DataStructureType
 master: {00000000-0000-0000-0000-000000000000}
 template: {455A3E98-A627-4B40-8035-E683A0331AC7}
 templatekey: Template field
-created: 20180724T155213:636680443334770000
+created: 20180831T160949:636713285894700000
 
 ----field----
 field: {AB162CC0-DC80-4ABF-8871-998EE5D7BA32}
 name: Type
 key: type
-content-length: 16
+content-length: 8
 
-Single-Line Text
+Droplink
+----field----
+field: {1EB8AE32-E190-44A6-968D-ED904C794EBF}
+name: Source
+key: source
+content-length: 49
+
+datasource={289F2A62-196D-403A-9F09-468998DD7D80}
 ----field----
 field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
 name: __Sortorder
 key: __sortorder
 content-length: 3
 
-100
+150
 ----version----
 language: en
 version: 1
-revision: 33309fe1-6ef8-4a5f-87ae-564af7a435e5
+revision: a177a4af-bdeb-4b81-9cb2-7d39fdcbe1d5
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -35,21 +42,21 @@ name: __Created
 key: __created
 content-length: 16
 
-20160622T222434Z
+20180831T160950Z
 ----field----
 field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
 name: __Revision
 key: __revision
 content-length: 36
 
-33309fe1-6ef8-4a5f-87ae-564af7a435e5
+a177a4af-bdeb-4b81-9cb2-7d39fdcbe1d5
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20180831T160940Z
+20180831T160954Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
