@@ -258,7 +258,19 @@ namespace EzImporter.DataReaders
     }
     private string GetCleanContent(HtmlNode node, Map.InputField field)
     {
-      var form = node.SelectSingleNode("//form");
+      /*
+       "Valid" paths
+       
+        //form
+        //form[ancestor-or-self::node()[contains(@class, 'hidden')]]
+        //form[count(ancestor-or-self::div[contains(@class, 'hidden')])=0]
+        //form[@id!='form_contact_us']
+        //form[local-name(..)='div'][../@id='content']
+
+      Please notice that the first one doesn't handle well the markup when there is more than one form in the source HTML
+
+       */
+      var form = node.SelectSingleNode(@"//form[count(ancestor-or-self::div[contains(@class, 'hidden')])=0]");
       if (form != null)
       {
         node = form.ParentNode;
