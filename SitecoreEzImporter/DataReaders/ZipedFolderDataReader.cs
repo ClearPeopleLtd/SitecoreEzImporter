@@ -287,7 +287,27 @@ namespace EzImporter.DataReaders
         {
           foreach (var n in noredestobereplaced)
           {
-            n.ParentNode.ReplaceChild(HtmlNode.CreateNode(item.ReplacementText), n);
+            var replacementPattern = item.ReplacementRegexPattern;
+            if (string.IsNullOrWhiteSpace(replacementPattern))
+            {
+              n.ParentNode.ReplaceChild(HtmlNode.CreateNode(item.ReplacementText), n);
+            }
+            else
+            {
+              var regex = new System.Text.RegularExpressions.Regex(replacementPattern);
+              var input = n.InnerHtml;
+              var replacement = !string.IsNullOrWhiteSpace(item.ReplacementText)? item.ReplacementText : string.Empty;
+              var replacedText = regex.Replace(input, replacement);
+              var newNode = HtmlNode.CreateNode(replacedText);
+              if (node == n)
+              {
+                node = newNode;
+              }
+              else
+              {
+                n.ParentNode.ReplaceChild(newNode, n);
+              }
+            }
           }
         }
       }

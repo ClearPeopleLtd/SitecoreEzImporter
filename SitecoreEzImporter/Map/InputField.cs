@@ -9,6 +9,7 @@ namespace EzImporter.Map
     public string XsltSelector { get; set; }
     public string Property { get; set; }
     public bool TextOnly { get; set; }
+    public string ReplacementRegexPattern { get; set; }
     public string ReplacementText { get; set; }
     public IList<InputField> Fields { get; set; }
     }
