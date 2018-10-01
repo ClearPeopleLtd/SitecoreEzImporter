@@ -258,35 +258,31 @@ namespace EzImporter.DataReaders
     }
     private string GetCleanContent(HtmlNode node, Map.InputField field)
     {
-      /*
-       "Valid" paths
-       
-        //form
-        //form[ancestor-or-self::node()[contains(@class, 'hidden')]]
-        //form[count(ancestor-or-self::div[contains(@class, 'hidden')])=0]
-        //form[@id!='form_contact_us']
-        //form[local-name(..)='div'][../@id='content']
+      // Avoid modifying the original node
+      var nodeClone = HtmlNode.CreateNode(node.OuterHtml);
 
-      Please notice that the first one doesn't handle well the markup when there is more than one form in the source HTML
-
-       */
-      var form = node.SelectSingleNode(@"//form[count(ancestor-or-self::div[contains(@class, 'hidden')])=0]");
+      // Remove existing ASPNET forms (except contact-us's one which will be replaced later with the associated placeholder.
+      var form = nodeClone.SelectSingleNode(@"//form[@id!='form_contact']");
       if (form != null)
       {
-        node = form.ParentNode;
-        foreach (var item in form.ChildNodes.Where(x => x.Attributes["class"] == null || x.Attributes["class"].Value != "aspNetHidden"))
+        var formParent = form.ParentNode;
+        if (formParent != null)
         {
-          node.AppendChild(item.CloneNode(true));
+          foreach (var item in form.ChildNodes.Where(x => x.Attributes["class"] == null || x.Attributes["class"].Value != "aspNetHidden"))
+          {
+            formParent.AppendChild(item.CloneNode(true));
+          }
+          formParent.RemoveChild(form);
         }
-        node.RemoveChild(form);
       }
       foreach (var item in field.Fields)
       {
-        var noredestobereplaced = node.SelectNodes(item.XsltSelector);
-        if (noredestobereplaced != null)
+        var nodesToBeReplaced = nodeClone.SelectNodes(item.XsltSelector);
+        if (nodesToBeReplaced != null)
         {
-          foreach (var n in noredestobereplaced)
+          foreach (var n in nodesToBeReplaced)
           {
+            //n.ParentNode.ReplaceChild(HtmlNode.CreateNode(item.ReplacementText), n);
             var replacementPattern = item.ReplacementRegexPattern;
             if (string.IsNullOrWhiteSpace(replacementPattern))
             {
@@ -296,12 +292,12 @@ namespace EzImporter.DataReaders
             {
               var regex = new System.Text.RegularExpressions.Regex(replacementPattern);
               var input = n.InnerHtml;
-              var replacement = !string.IsNullOrWhiteSpace(item.ReplacementText)? item.ReplacementText : string.Empty;
+              var replacement = !string.IsNullOrWhiteSpace(item.ReplacementText) ? item.ReplacementText : string.Empty;
               var replacedText = regex.Replace(input, replacement);
               var newNode = HtmlNode.CreateNode(replacedText);
-              if (node == n)
+              if (nodeClone == n)
               {
-                node = newNode;
+                nodeClone = newNode;
               }
               else
               {
@@ -311,7 +307,7 @@ namespace EzImporter.DataReaders
           }
         }
       }
-      return field.TextOnly ? new string(node.InnerText.Where(c => !char.IsControl(c)).ToArray()) : node.InnerHtml;
+      return field.TextOnly ? new string(nodeClone.InnerText.Where(c => !char.IsControl(c)).ToArray()) : nodeClone.InnerHtml;
     }
     public string Decompress(FileInfo fileToDecompress)
     {
