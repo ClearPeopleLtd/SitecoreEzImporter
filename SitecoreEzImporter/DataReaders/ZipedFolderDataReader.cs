@@ -263,7 +263,7 @@ namespace EzImporter.DataReaders
       if (!string.IsNullOrWhiteSpace(replacementPattern))
       {
         var regex = new System.Text.RegularExpressions.Regex(replacementPattern);
-        var replacement = !string.IsNullOrWhiteSpace(field.ReplacementText) ? field.ReplacementText : string.Empty;
+        var replacement = field.ReplacementText ?? string.Empty;
         cleanName = regex.Replace(cleanName, replacement);
       }
 
@@ -275,7 +275,7 @@ namespace EzImporter.DataReaders
           if (!string.IsNullOrWhiteSpace(replacementPattern))
           {
             var regex = new System.Text.RegularExpressions.Regex(replacementPattern);
-            var replacement = !string.IsNullOrWhiteSpace(item.ReplacementText) ? item.ReplacementText : string.Empty;
+            var replacement = item.ReplacementText ?? string.Empty;
             cleanName = regex.Replace(cleanName, replacement);
           }
         }
@@ -318,7 +318,7 @@ namespace EzImporter.DataReaders
             {
               var regex = new System.Text.RegularExpressions.Regex(replacementPattern);
               var input = n.InnerHtml;
-              var replacement = !string.IsNullOrWhiteSpace(item.ReplacementText) ? item.ReplacementText : string.Empty;
+              var replacement = item.ReplacementText ?? string.Empty;
               var replacedText = regex.Replace(input, replacement);
               var newNode = HtmlNode.CreateNode(replacedText);
               if (nodeClone == n)
