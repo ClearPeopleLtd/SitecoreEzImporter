@@ -151,7 +151,7 @@ namespace EzImporter.DataReaders
         {
           if (field.Name.Equals("name", StringComparison.InvariantCultureIgnoreCase))
           {
-            row[field.Name] = fi.Name.Substring(0, fi.Name.IndexOf(".aspx")).Replace("-", " ").Replace(@"%20", "");
+            row[field.Name] = GetCleanName(fi.Name, field);
           }
           else if (field.Name.Equals("originalvalue", StringComparison.InvariantCultureIgnoreCase))
           {
@@ -255,6 +255,32 @@ namespace EzImporter.DataReaders
       file.MoveTo(target);
       
       Log.Info(string.Format("Moving file from {0} to {1}",file.FullName,target),this);
+    }
+    private string GetCleanName(string name, Map.InputField field)
+    {
+      string cleanName = name;
+      var replacementPattern = field.ReplacementRegexPattern;
+      if (!string.IsNullOrWhiteSpace(replacementPattern))
+      {
+        var regex = new System.Text.RegularExpressions.Regex(replacementPattern);
+        var replacement = !string.IsNullOrWhiteSpace(field.ReplacementText) ? field.ReplacementText : string.Empty;
+        cleanName = regex.Replace(cleanName, replacement);
+      }
+
+      if (field.Fields != null && field.Fields.Count > 0)
+      {
+        foreach (var item in field.Fields)
+        {
+          replacementPattern = item.ReplacementRegexPattern;
+          if (!string.IsNullOrWhiteSpace(replacementPattern))
+          {
+            var regex = new System.Text.RegularExpressions.Regex(replacementPattern);
+            var replacement = !string.IsNullOrWhiteSpace(item.ReplacementText) ? item.ReplacementText : string.Empty;
+            cleanName = regex.Replace(cleanName, replacement);
+          }
+        }
+      }
+      return cleanName;
     }
     private string GetCleanContent(HtmlNode node, Map.InputField field)
     {
