@@ -183,7 +183,7 @@ namespace EzImporter.DataReaders
                       var content = node.Attributes["content"];
                       if (content != null)
                       {
-                        row[field.Name] += HttpUtility.HtmlDecode(content.Value) + " ";
+                        row[field.Name] += GetCleanContent(content, field) + " ";
                       }
                       else
                       {
@@ -281,6 +281,23 @@ namespace EzImporter.DataReaders
         }
       }
       return cleanName;
+    }
+    private string GetCleanContent(HtmlAttribute content, Map.InputField field)
+    {
+      var contentValue = HttpUtility.HtmlDecode(content.Value);
+      foreach (var item in field.Fields)
+      {
+        var replacementPattern = item.ReplacementRegexPattern;
+        if (!string.IsNullOrWhiteSpace(replacementPattern))
+        {
+          var regex = new System.Text.RegularExpressions.Regex(replacementPattern);
+          var input = contentValue;
+          var replacement = item.ReplacementText ?? string.Empty;
+          var replacedText = regex.Replace(input, replacement);
+          contentValue = replacedText;
+        }
+      }
+      return contentValue;
     }
     private string GetCleanContent(HtmlNode node, Map.InputField field)
     {
