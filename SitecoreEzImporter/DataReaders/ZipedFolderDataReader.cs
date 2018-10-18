@@ -174,7 +174,7 @@ namespace EzImporter.DataReaders
                       var content = node.Attributes[field.Property];
                       if (content != null)
                       {
-                        row[field.Name] += HttpUtility.HtmlDecode(content.Value);
+                        row[field.Name] += GetCleanContent(content, field);
                       }
                     }
                     else
