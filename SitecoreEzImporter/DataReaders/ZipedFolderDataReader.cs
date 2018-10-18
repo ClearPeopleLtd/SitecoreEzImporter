@@ -174,7 +174,7 @@ namespace EzImporter.DataReaders
                       var content = node.Attributes[field.Property];
                       if (content != null)
                       {
-                        row[field.Name] += HttpUtility.HtmlDecode(content.Value) + " ";
+                        row[field.Name] += HttpUtility.HtmlDecode(content.Value);
                       }
                     }
                     else
@@ -183,11 +183,11 @@ namespace EzImporter.DataReaders
                       var content = node.Attributes["content"];
                       if (content != null)
                       {
-                        row[field.Name] += GetCleanContent(content, field) + " ";
+                        row[field.Name] += GetCleanContent(content, field);
                       }
                       else
                       {
-                        row[field.Name] += GetCleanContent(node, field) + " ";
+                        row[field.Name] += GetCleanContent(node, field);
                       }
                     }
                   }
